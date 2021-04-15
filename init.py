@@ -2,6 +2,7 @@ import unittest
 from appium import webdriver
 from appium.webdriver.appium_service import AppiumService
 import os
+import pytest
 
 
 class Container:
@@ -12,9 +13,9 @@ class Container:
 instance = Container()
 
 
-class TestBase(unittest.TestCase):
+class TestBase:
 
-    def setUp(self):
+    def setup_class(self):
         # service = AppiumService()
         # service.start(args=['--address', '127.0.0.1', '-p', '4724'])
         #
@@ -36,7 +37,7 @@ class TestBase(unittest.TestCase):
 
         instance.driver = self.driver
 
-    def tearDown(self):
+    def teardown_class(self):
         instance.driver.quit()
         # instance.service.stop()
         # os.system('killall -9 player')

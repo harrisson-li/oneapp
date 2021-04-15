@@ -18,6 +18,17 @@ class LoginPage:
     def get_element(self, xpath, waiting_time=DEFAULT_WAITING_TIME):
         return WebDriverWait(self.driver, waiting_time).until(expected_conditions.presence_of_element_located((By.XPATH, xpath)))
 
+    def wait_for_text(self, xpath, text, waiting_time=DEFAULT_WAITING_TIME):
+        for i in range(0, waiting_time):
+            try:
+                assert self.get_element(xpath).text == text
+                return True
+            except Exception:
+                i += 1
+                continue
+
+        raise Exception
+
     def wait_for_activity(self, activity, waiting_time=DEFAULT_WAITING_TIME):
         self.driver.wait_activity(activity, waiting_time)
 
@@ -32,3 +43,4 @@ class LoginPage:
 
     def debug_login_button(self):
         return self.get_element(self.DEBUG_LOGIN_BUTTON_XPATH)
+
